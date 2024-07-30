@@ -25,7 +25,7 @@ int main()
     BSP_LCD_LayerDefaultInit(LTDC_ACTIVE_LAYER, LCD_FB_START_ADDRESS);
     BSP_LCD_SelectLayer(LTDC_ACTIVE_LAYER);
 
-    BSP_LCD_DisplayStringAt(0, LINE(5), (uint8_t *)"TOUCHSCREEN DEMO", CENTER_MODE);
+    //BSP_LCD_DisplayStringAt(0, LINE(5), (uint8_t *)"TOUCHSCREEN DEMO", CENTER_MODE);
     HAL_Delay(1000);
 
     status = BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
@@ -38,7 +38,7 @@ int main()
         BSP_LCD_Clear(LCD_COLOR_GREEN);
         BSP_LCD_SetBackColor(LCD_COLOR_GREEN);
         BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-        BSP_LCD_DisplayStringAt(0, LINE(5), (uint8_t *)"TOUCHSCREEN INIT OK", CENTER_MODE);
+        //BSP_LCD_DisplayStringAt(0, LINE(5), (uint8_t *)"TOUCHSCREEN INIT OK", CENTER_MODE);
     }
 
     HAL_Delay(1000);
