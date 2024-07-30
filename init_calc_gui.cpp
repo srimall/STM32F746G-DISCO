@@ -8,12 +8,12 @@
 
 void init_calc_gui() {
 
-BSP_LCD_SetFont(&Font16);
+BSP_LCD_SetFont(&Font20);
     BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 
     // Calculator Display
-    BSP_LCD_DrawRect(10, 10, 420, 50);
+    BSP_LCD_DrawRect(10, 10, 466, 50);
 
     // Number Boxes
     BSP_LCD_DrawRect(10, 100, 100, 50); //1
@@ -27,14 +27,17 @@ BSP_LCD_SetFont(&Font16);
     BSP_LCD_DrawRect(214, 100, 100, 50); //7
     BSP_LCD_DrawRect(214, 152, 100, 50); //8
     BSP_LCD_DrawRect(214, 204, 100, 50); //9
+    BSP_LCD_DrawRect(316, 100, 50, 154); //0
 
-    BSP_LCD_DrawRect(326, 100, 50, 50);
-    BSP_LCD_DrawRect(326, 152, 50, 50);
-    BSP_LCD_DrawRect(326, 204, 50, 50);
+        uint8_t offset = 46;
 
-    BSP_LCD_DrawRect(378, 100, 50, 50);
-    BSP_LCD_DrawRect(378, 152, 50, 50);
-    BSP_LCD_DrawRect(378, 204, 50, 50);
+    BSP_LCD_DrawRect(326+offset, 100, 50, 50);
+    BSP_LCD_DrawRect(326+offset, 152, 50, 50);
+    BSP_LCD_DrawRect(326+offset, 204, 50, 50);
+
+    BSP_LCD_DrawRect(378+offset, 100, 50, 50);
+    BSP_LCD_DrawRect(378+offset, 152, 50, 50);
+    BSP_LCD_DrawRect(378+offset, 204, 50, 50);
 
     //BSP_LCD_DrawRect(430, 100, 45, 50);
    // BSP_LCD_DrawRect(430, 152, 45, 50);
@@ -51,14 +54,16 @@ BSP_LCD_SetFont(&Font16);
     BSP_LCD_DisplayStringAt(254,120, (uint8_t *)"7",LEFT_MODE);
     BSP_LCD_DisplayStringAt(254,172, (uint8_t *)"8",LEFT_MODE);
     BSP_LCD_DisplayStringAt(254,224, (uint8_t *)"9",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(336, 172, (uint8_t *)"0",LEFT_MODE);
 
-    BSP_LCD_DisplayStringAt(346,120, (uint8_t *)"+",LEFT_MODE);
-    BSP_LCD_DisplayStringAt(346,172, (uint8_t *)"-",LEFT_MODE);
-    BSP_LCD_DisplayStringAt(346,224, (uint8_t *)"*",LEFT_MODE);
 
-    BSP_LCD_DisplayStringAt(398,120, (uint8_t *)"/",LEFT_MODE);
-    BSP_LCD_DisplayStringAt(398,172, (uint8_t *)"=",LEFT_MODE);
-    BSP_LCD_DisplayStringAt(398,224, (uint8_t *)"c",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(346+offset,120, (uint8_t *)"+",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(346+offset,172, (uint8_t *)"-",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(346+offset,224, (uint8_t *)"*",LEFT_MODE);
+
+    BSP_LCD_DisplayStringAt(398+offset,120, (uint8_t *)"/",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(398+offset,172, (uint8_t *)"=",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(398+offset,224, (uint8_t *)"c",LEFT_MODE);
 
 }
 
@@ -87,7 +92,7 @@ void write_to_field_char_array(const char * display_value) {
     BSP_LCD_ClearStringLine(1);
     uint8_t text[30];
     sprintf((char*)text, "%s",display_value);
-    BSP_LCD_DisplayStringAt(10, LINE(1), (uint8_t *)&text, LEFT_MODE);
+    BSP_LCD_DisplayStringAt(30, LINE(1), (uint8_t *)&text, LEFT_MODE);
 }
 
 void write_to_field_string(string num) {
@@ -101,6 +106,7 @@ void write_to_field_string(string num) {
 
 
 char get_pressed(uint16_t x, uint16_t y) {
+    uint8_t offset = 46;
     if ( 10 < x & x < 110 ) {
         if ( 100 < y & y < 152)       return '1';
         else if ( 152 < y & y < 204 ) return '2';
@@ -114,11 +120,13 @@ char get_pressed(uint16_t x, uint16_t y) {
         if ( 100 < y & y < 152)       return '7';
         else if ( 152 < y & y < 204 ) return '8';
         else if ( 204 < y & y < 254 ) return '9';
-    } else if ( 326 < x & x < 378 ) {
+    } else if ( 316 < x & x < 366) {
+        if ( 100 <y & y < 254) return '0';
+    } else if ( (326+offset) < x & x < (378+offset) ) {
         if ( 100 < y & y < 152)       return '+';
         else if ( 152 < y & y < 204 ) return '-';
         else if ( 204 < y & y < 254 ) return '*';
-    } else if ( 378 < x & x < 400 ) {
+    } else if ( (378+offset) < x & x < (400+offset) ) {
         if ( 100 < y & y < 152)       return '/';
         else if ( 152 < y & y < 204 ) return '=';
         else if ( 204 < y & y < 254 ) return 'c';
